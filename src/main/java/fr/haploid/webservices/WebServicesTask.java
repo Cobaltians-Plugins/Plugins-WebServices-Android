@@ -29,8 +29,8 @@
 
 package fr.haploid.webservices;
 
-import fr.cobaltians.cobalt.Cobalt;
-import fr.cobaltians.cobalt.fragments.CobaltFragment;
+import org.cobaltians.cobalt.Cobalt;
+import org.cobaltians.cobalt.fragments.CobaltFragment;
 
 import android.net.Uri;
 import android.os.AsyncTask;

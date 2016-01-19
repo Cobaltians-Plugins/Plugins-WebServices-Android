@@ -29,7 +29,7 @@
 
 package fr.haploid.webservices;
 
-import fr.cobaltians.cobalt.Cobalt;
+import org.cobaltians.cobalt.Cobalt;
 
 import android.content.Context;
 import android.content.SharedPreferences;

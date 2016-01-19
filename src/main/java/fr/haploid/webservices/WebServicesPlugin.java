@@ -29,10 +29,10 @@
 
 package fr.haploid.webservices;
 
-import fr.cobaltians.cobalt.Cobalt;
-import fr.cobaltians.cobalt.fragments.CobaltFragment;
-import fr.cobaltians.cobalt.plugin.CobaltAbstractPlugin;
-import fr.cobaltians.cobalt.plugin.CobaltPluginWebContainer;
+import org.cobaltians.cobalt.Cobalt;
+import org.cobaltians.cobalt.fragments.CobaltFragment;
+import org.cobaltians.cobalt.plugin.CobaltAbstractPlugin;
+import org.cobaltians.cobalt.plugin.CobaltPluginWebContainer;
 
 import android.os.AsyncTask;
 import android.os.Build;
