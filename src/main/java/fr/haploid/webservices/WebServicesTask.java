@@ -252,7 +252,7 @@ public final class WebServicesTask extends AsyncTask<Void, Void, JSONObject> {
                             InputStream inputStream;
                             if (responseCode >= 400 && responseCode < 600) inputStream = urlConnection.getErrorStream();
                             else inputStream = urlConnection.getInputStream();
-                            
+
                             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
                             StringBuffer buffer = new StringBuffer();
                             String line;
@@ -316,14 +316,31 @@ public final class WebServicesTask extends AsyncTask<Void, Void, JSONObject> {
                 String text = response.optString(kJSText, null);
                 if (text != null) {
                     try {
+                        // Try to parse received data as a JSON object
                         JSONObject responseData = new JSONObject(text);
-                        responseData = WebServicesPlugin.treatData(responseData, mProcessData, mFragment);
                         data.put(Cobalt.kJSData, responseData);
                     }
                     catch (JSONException exception) {
-                        Log.w(Cobalt.TAG, TAG + " - onPostExecute: response could not be parsed as JSON. Response: " + text);
-                        exception.printStackTrace();
-                        data.put(kJSText, text);
+                        try {
+                            // If it fails, try to parse it as a JSON array
+                            JSONArray responseDataAsArray = new JSONArray(text);
+
+                            // We encapsulate the array in a JSON object
+                            JSONObject responseData = new JSONObject().put("result", responseDataAsArray);
+
+                            // Don't forget to update the response string as well
+                            text = responseData.toString();
+                            data.put(Cobalt.kJSData, responseData);
+
+                            Log.w(Cobalt.TAG, TAG + " - onPostExecute: response was a JSON array and has been encapsulated in a JSON object: " + text);
+                        }
+                        catch (JSONException e) {
+                            // If response could not be parsed as JSON, save the response as text
+                            data.put(kJSText, text);
+
+                            Log.w(Cobalt.TAG, TAG + " - onPostExecute: response could not be parsed as JSON: " + text);
+                            exception.printStackTrace();
+                        }
                     }
                 }
 
