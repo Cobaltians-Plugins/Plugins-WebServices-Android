@@ -318,6 +318,7 @@ public final class WebServicesTask extends AsyncTask<Void, Void, JSONObject> {
                     try {
                         // Try to parse received data as a JSON object
                         JSONObject responseData = new JSONObject(text);
+                        responseData = WebServicesPlugin.treatData(responseData, mProcessData, mFragment);
                         data.put(Cobalt.kJSData, responseData);
                     }
                     catch (JSONException exception) {
@@ -330,6 +331,8 @@ public final class WebServicesTask extends AsyncTask<Void, Void, JSONObject> {
 
                             // Don't forget to update the response string as well
                             text = responseData.toString();
+
+                            responseData = WebServicesPlugin.treatData(responseData, mProcessData, mFragment);
                             data.put(Cobalt.kJSData, responseData);
 
                             Log.w(Cobalt.TAG, TAG + " - onPostExecute: response was a JSON array and has been encapsulated in a JSON object: " + text);
